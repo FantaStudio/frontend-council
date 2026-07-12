@@ -1,0 +1,32 @@
+council:
+  chairman:
+    role: auto
+  members:
+    - name: junior-portal
+      level: junior
+      project: corporate-portal
+      tier: fast
+      model: composer-2.5-fast
+      persona_file: references/personas/junior-portal.md
+      emoji: '🌱'
+      color: 'GREEN'
+    - name: middle-ai
+      level: middle
+      project: ai-platform
+      tier: medium
+      model: gpt-5.5-medium
+      persona_file: references/personas/middle-ai-platform.md
+      emoji: '⚡'
+      color: 'BLUE'
+    - name: senior-custom
+      level: senior
+      project: custom-solutions
+      tier: pro
+      model: gemini-3.1-pro
+      persona_file: references/personas/senior-custom-solutions.md
+      emoji: '🎯'
+      color: 'CYAN'
+  settings:
+    execution: desktop
+    exclude_chairman_from_members: true
+    timeout: 180
