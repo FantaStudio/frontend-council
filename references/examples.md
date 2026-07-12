@@ -1,9 +1,13 @@
 # Examples
 
-## Выбор state manager
+## Choosing a state manager
 
-Prompt: `Нужен ли Redux Toolkit для формы из 5 полей? frontend-council`
+Prompt: `Do I need Redux Toolkit for a 5-field form? frontend-council`
 
-## Ревью подхода
+Russian: `Нужен ли Redux Toolkit для формы из 5 полей? frontend-council`
 
-Prompt: `Созови совет: стоит ли выносить fetch в custom hook или в RTK Query?`
+## Reviewing an approach
+
+Prompt: `Call the council: should I move fetch into a custom hook or RTK Query?`
+
+Russian: `Созови совет: стоит ли выносить fetch в custom hook или в RTK Query?`

@@ -1,56 +1,56 @@
 # Desktop workflow (Cursor Agent)
 
-Режим `execution: desktop` — участники совета вызываются через **Task subagent** в Cursor Desktop, а не через headless `agent -p` CLI.
+With `execution: desktop`, council members are invoked via **Task subagent** in Cursor Desktop, not headless `agent -p` CLI.
 
-## Почему
+## Why
 
-CLI `agent -p --model <name>` может отклонять named models с ошибкой «Free plans can only use Auto», даже при Pro в IDE. Task в Desktop использует подписку и выбранные модели напрямую.
+CLI `agent -p --model <name>` may reject named models with "Free plans can only use Auto", even with Pro in the IDE. Task in Desktop uses your subscription and selected models directly.
 
-## Workflow для chairman (host agent)
+## Workflow for the chairman (host agent)
 
-1. **Подготовка job**
+1. **Prepare the job**
 
 ```bash
-JOB_JSON=$(./scripts/council.sh start --json "вопрос пользователя")
+JOB_JSON=$(./scripts/council.sh start --json "user question")
 ```
 
-В JSON: `execution: "desktop"`, `members[]` с полями `name`, `model`, `prompt`, `promptPath`.
+JSON includes `execution: "desktop"`, `members[]` with `name`, `model`, `prompt`, `promptPath`.
 
-2. **Параллельный запуск Task** — один Task на member, в одном сообщении:
+2. **Launch Tasks in parallel** — one Task per member, in a single message:
 
-| Поле Task           | Значение                                                     |
+| Task field          | Value                                                        |
 | ------------------- | ------------------------------------------------------------ |
 | `subagent_type`     | `generalPurpose`                                             |
-| `model`             | `members[].model` (напр. `gpt-5.5-medium`, `gemini-3.1-pro`) |
+| `model`             | `members[].model` (e.g. `gpt-5.5-medium`, `gemini-3.1-pro`) |
 | `description`       | `[Frontend Council] <name>`                                  |
-| `prompt`            | содержимое `members[].prompt`                                |
+| `prompt`            | contents of `members[].prompt`                               |
 | `run_in_background` | `false`                                                      |
 
-3. **Запись ответов**
+3. **Record responses**
 
-После каждого Task:
+After each Task:
 
 ```bash
 ./scripts/council.sh record "$JOB_DIR" junior-portal --stdin <<'EOF'
-<полный ответ member>
+<full member response>
 EOF
 ```
 
-При ошибке:
+On error:
 
 ```bash
 ./scripts/council.sh record "$JOB_DIR" middle-ai --stdin --state error <<'EOF'
-текст ошибки
+error message
 EOF
 ```
 
-4. **Результаты и синтез**
+4. **Results and synthesis**
 
 ```bash
 ./scripts/council.sh results --json "$JOB_DIR"
 ```
 
-Синтез по `references/synthesis.md`, затем:
+Synthesize per `references/synthesis.md`, then:
 
 ```bash
 ./scripts/council.sh clean "$JOB_DIR"
@@ -58,13 +58,13 @@ EOF
 
 ## CLI fallback
 
-Терминал без host agent:
+Terminal without a host agent:
 
 ```bash
-./scripts/council.sh start --cli "вопрос"
-# или council.config.yaml: settings.execution: cli
+./scripts/council.sh start --cli "question"
+# or council.config.yaml: settings.execution: cli
 ```
 
-## Модели по tier
+## Models by tier
 
-См. `scripts/lib/tier-models.js` и `council.config.yaml` — поле `model` на каждом member.
+See `scripts/lib/tier-models.js` and `council.config.yaml` — `model` field on each member.

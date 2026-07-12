@@ -4,11 +4,11 @@ const path = require('path');
 const PROMPT_SEPARATOR = '\n\n---\n\n';
 
 /**
- * Читает persona-файл относительно корня скилла.
+ * Reads a persona file relative to the skill root.
  *
- * @param personaFile — путь из config (относительный или абсолютный)
- * @param skillDir — корень скилла frontend-council
- * @returns содержимое persona
+ * @param personaFile — path from config (relative or absolute)
+ * @param skillDir — frontend-council skill root
+ * @returns persona contents
  */
 function readPersonaFile(personaFile, skillDir) {
   const resolved = path.isAbsolute(personaFile)
@@ -21,19 +21,16 @@ function readPersonaFile(personaFile, skillDir) {
 }
 
 /**
- * Собирает финальный prompt для member: persona + вопрос совета.
+ * Assembles the final member prompt: persona + council question.
  *
- * @param personaContent — текст persona (включая формат ответа)
- * @param userQuestion — вопрос пользователя
- * @returns prompt для CLI
+ * @param personaContent — persona text (including response format)
+ * @param userQuestion — user's question (any language)
+ * @returns prompt for CLI / Task
  */
 function buildMemberPrompt({ personaContent, userQuestion }) {
   const persona = String(personaContent || '').trim();
   const question = String(userQuestion || '').trim();
-  return [
-    persona,
-    `${PROMPT_SEPARATOR}Вопрос совета:\n${question}`,
-  ].join(PROMPT_SEPARATOR);
+  return `${persona}${PROMPT_SEPARATOR}Council question:\n${question}`;
 }
 
 module.exports = {

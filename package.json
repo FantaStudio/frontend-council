@@ -1,23 +1,24 @@
 {
-  "name": "frontend-council",
-  "version": "0.1.0",
-  "description": "Parallel frontend council skill for Cursor and agent-skills compatible clients",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/YOUR_GITHUB_USER/frontend-council.git"
-  },
-  "keywords": [
-    "agent-skill",
-    "cursor",
-    "claude-code",
-    "frontend",
-    "skills.sh"
-  ],
-  "scripts": {
-    "test": "node scripts/tests/prompt-assembly.test.js && node scripts/tests/generate-config.test.js && node scripts/tests/execution-mode.test.js"
-  },
-  "dependencies": {
-    "yaml": "^2.8.0"
-  }
+    "name": "frontend-council",
+    "version": "0.1.0",
+    "description": "Your frontend second opinion: three developers debate, you get the verdict",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/FantaStudio/frontend-council.git"
+    },
+    "keywords": [
+        "agent-skill",
+        "cursor",
+        "claude-code",
+        "frontend",
+        "skills.sh"
+    ],
+    "scripts": {
+        "postinstall": "node scripts/generate-config.js .",
+        "test": "node scripts/tests/prompt-assembly.test.js && node scripts/tests/generate-config.test.js && node scripts/tests/execution-mode.test.js"
+    },
+    "dependencies": {
+        "yaml": "^2.8.0"
+    }
 }

@@ -1,60 +1,60 @@
 ---
 name: frontend-council
 description: >-
-  Собирает мнения трёх фронтенд-разработчиков (junior/middle/senior) с разных
-  корпоративных проектов через параллельные Task в Cursor Desktop, синтез —
-  текущий агент. Использовать при «созови совет», «frontend-council»,
-  «мнение фронтендеров», спорных фронтенд-решениях.
+  Your frontend second opinion: three developers debate, you get the verdict.
+  Junior, middle, and senior perspectives from different corporate projects.
+  Use for "call the council", "frontend-council", contentious frontend decisions.
+  Works in English and Russian.
 ---
 
 # Frontend Council
 
-Собери мнения совета и синтезируй итог. **Spec:** `docs/superpowers/specs/2026-06-30-frontend-council-design.md`
+Collect council opinions and synthesize the verdict. **Spec:** `docs/superpowers/specs/2026-06-30-frontend-council-design.md`
 
-## Участники
+## Members
 
-| Member        | Уровень | Проект               | Model             |
-| ------------- | ------- | -------------------- | ----------------- |
-| junior-portal | Junior  | Корпоративный портал | composer-2.5-fast |
-| middle-ai     | Middle  | ИИ-платформа         | gpt-5.5-medium    |
-| senior-custom | Senior  | Заказные решения     | gemini-3.1-pro    |
+| Member        | Level  | Project           | Model             |
+| ------------- | ------ | ----------------- | ----------------- |
+| junior-portal | Junior | Corporate portal  | composer-2.5-fast |
+| middle-ai     | Middle | AI platform       | gpt-5.5-medium    |
+| senior-custom | Senior | Custom solutions  | gemini-3.1-pro    |
 
-## Workflow (desktop, по умолчанию)
+## Workflow (desktop, default)
 
 1. `JOB_JSON=$(./scripts/council.sh start --json "$ARGUMENTS")`
-2. Из JSON возьми `desktopMembers[]` — для **каждого** member параллельно запусти **Task**:
+2. From JSON, take `desktopMembers[]` — for **each** member launch **Task** in parallel:
    - `subagent_type`: `generalPurpose`
    - `model`: `desktopMembers[].model`
    - `description`: `[Frontend Council] <name>`
    - `prompt`: `desktopMembers[].prompt`
-3. После каждого Task запиши ответ:
-   `./scripts/council.sh record "$JOB_DIR" <name> --stdin` (heredoc с полным текстом)
+3. After each Task, record the response:
+   `./scripts/council.sh record "$JOB_DIR" <name> --stdin` (heredoc with full text)
 4. `./scripts/council.sh results --json "$JOB_DIR"`
-5. Синтез по `references/synthesis.md`
+5. Synthesize per `references/synthesis.md` (match the user's language)
 6. `./scripts/council.sh clean "$JOB_DIR"`
 
-Подробности: `references/desktop-workflow.md`
+Details: `references/desktop-workflow.md`
 
 ## CLI fallback
 
-Для терминала без host agent: `settings.execution: cli` или `./scripts/council.sh start --cli "вопрос"`.
+For terminal without host agent: `settings.execution: cli` or `./scripts/council.sh start --cli "question"`.
 
-## One-shot (только CLI)
+## One-shot (CLI only)
 
 ```bash
-./scripts/council.sh --cli "вопрос"
+./scripts/council.sh --cli "question"
 ```
 
-## Установка
+## Install
 
-**Рекомендуется (skills.sh / Cursor / Claude Code / др.):**
+**Recommended (skills.sh / Cursor / Claude Code / etc.):**
 
 ```bash
-npx skills add YOUR_GITHUB_USER/frontend-council -g -y
+npx skills add FantaStudio/frontend-council -g -y
 cd ~/.cursor/skills/frontend-council && npm install && node scripts/generate-config.js .
 ```
 
-**Локально из клона репозитория:**
+**From a local clone:**
 
 ```bash
 ./scripts/install.sh --target both
@@ -62,8 +62,8 @@ cd ~/.cursor/skills/frontend-council && npm install && node scripts/generate-con
 
 ## References
 
-- `references/desktop-workflow.md` — Task subagents в Cursor
+- `references/desktop-workflow.md` — Task subagents in Cursor
 - `references/overview.md` — workflow
-- `references/synthesis.md` — формат итога chairman
-- `references/host-ui.md` — checklist в Cursor
-- `references/config.md` — настройка members
+- `references/synthesis.md` — chairman output format
+- `references/host-ui.md` — checklist in Cursor
+- `references/config.md` — member configuration

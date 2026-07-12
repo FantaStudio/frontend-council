@@ -8,11 +8,11 @@ const { buildMemberPrompt, readPersonaFile } = require('../lib/prompt-assembly.j
 describe('prompt-assembly', () => {
   it('buildMemberPrompt joins persona and user question', () => {
     const result = buildMemberPrompt({
-      personaContent: 'Ты junior на портале.',
-      userQuestion: 'Нужен ли Redux?',
+      personaContent: 'You are a junior on the portal team.',
+      userQuestion: 'Do we need Redux?',
     });
-    assert.match(result, /Ты junior на портале/);
-    assert.match(result, /Вопрос совета:\nНужен ли Redux\?/);
+    assert.match(result, /You are a junior on the portal team/);
+    assert.match(result, /Council question:\nDo we need Redux\?/);
   });
 
   it('readPersonaFile resolves relative path from skill dir', () => {
